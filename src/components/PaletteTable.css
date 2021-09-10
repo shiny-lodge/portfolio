@@ -1,3 +1,7 @@
+.palette-table {
+    max-width: '100%'
+}
+
 .palette-table__header {
     text-align: left;
     font-size: 16px;
@@ -7,4 +11,39 @@
     height: 12px;
     width: auto;
     margin-left: 4px;
+}
+
+.palette-table__footer {
+    display: flex;
+    flex-direction: row;
+    height: 25px;
+    align-items: center;
+    column-gap: 6px;
+    justify-content: center;
+}
+
+.palette-table__input {
+    -moz-appearance: textfield;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid;
+    text-align: center;
+    font-weight: 700;
+}
+
+.palette-table__input::-webkit-outer-spin-button,
+.palette-table__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.palette-table__button {
+    border: none;
+    background-color: transparent;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.palette-table__button:disabled {
+    opacity: 0.5;
 }

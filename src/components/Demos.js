@@ -35,6 +35,7 @@ export default function Demos(props) {
                     <button
                         key={'button_' + index}
                         className={styles.button}
+                        style={{ color: primaryColor }}
                         onClick={() => { setActiveDemo(demos[index].component); }}>
                         {tabData.name}
                         <div
@@ -48,7 +49,7 @@ export default function Demos(props) {
 
     return (
         <div className="Demos" style={{ backgroundColor: paperColor }}>
-            <h2 className='demos__title'>Демо</h2>
+            <h2 style={{ color: primaryColor }} className='demos__title'>Демо</h2>
             <div>
                 {makeTabs(demos, tabs)}
             </div>

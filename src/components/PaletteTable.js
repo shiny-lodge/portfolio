@@ -7,6 +7,14 @@ import { PaletteTableFilter } from './PaletteTableFilter'
 
 export const PaletteTable = (props) => {
 
+    const { primaryColor } = props;
+    const [palette, setPalette] = React.useState({
+        background: props.background,
+        paper: props.paperColor,
+        primary: props.primaryColor,
+        accent: props.accentColor
+    })
+
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => MOCK_DATA, [])
 
@@ -37,8 +45,9 @@ export const PaletteTable = (props) => {
 
     return (
         <>
-            <PaletteTableFilter filter={globalFilter} setFilter={setGlobalFilter} />
-            <table style={{ maxWidth: '100%', color: props.primaryColor }} {...getTableProps()}>
+            <PaletteTableFilter textColor={palette.primary} filter={globalFilter} setFilter={setGlobalFilter} />
+
+            <table className='palette-table' style={{ color: palette.primary }} {...getTableProps()}>
                 <thead>
                     {
                         headerGroups.map((headerGroup) => (
@@ -64,14 +73,17 @@ export const PaletteTable = (props) => {
                             </tr>
                         ))
                     }
-
                 </thead>
                 <tbody {...getTableBodyProps()}>
                     {
                         page.map(row => {
                             prepareRow(row)
                             return (
-                                <tr style={{ cursor: 'pointer' }} onClick={() => props.updatePalette(row.original)} {...row.getRowProps()}>
+                                <tr style={{ cursor: 'pointer' }}
+                                    onClick={() => {
+                                        props.updatePalette(row.original);
+                                        setPalette(row.original)
+                                    }} {...row.getRowProps()}>
                                     {row.cells.map((cell) => {
                                         return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                                     })}
@@ -82,17 +94,18 @@ export const PaletteTable = (props) => {
                 </tbody>
             </table>
 
-            <div style={{ display: 'flex', flexDirection: 'row', height: '25px', alignItems: 'center', columnGap: '6px', justifyContent: 'center' }}>
-                <button onClick={() => { previousPage() }} disabled={!canPreviousPage}>Назад</button>
-                <button onClick={() => { gotoPage(0) }} disabled={!canPreviousPage}>{'<<'}</button>
+            <div style={{ color: palette.primary }} className='palette-table__footer'>
+                <button style={{ color: palette.primary, borderColor: palette.primary }} className='palette-table__button' onClick={() => { gotoPage(0) }} disabled={!canPreviousPage}>{'<<'}</button>
+                <button style={{ color: palette.primary, borderColor: palette.primary }} className='palette-table__button' onClick={() => { previousPage() }} disabled={!canPreviousPage}>{'<'}</button>
                 <span>Страница <strong>{pageIndex + 1}</strong> из <strong>{pageOptions.length}</strong></span>
                 <span>| Перейти на страницу: {' '}</span>
-                <input style={{ width: '40px' }} type='number' defaultValue={pageIndex + 1} onChange={e => {
+                <input className='palette-table__input' style={{ width: '40px', color: palette.primary, borderColor: palette.primary }} type='number' defaultValue={pageIndex + 1} onChange={e => {
                     const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
                     gotoPage(pageNumber);
                 }}></input>
-                <button onClick={() => { gotoPage(pageCount - 1) }} disabled={!canNextPage}>{'>>'}</button>
-                <button onClick={() => { nextPage() }} disabled={!canNextPage}>Вперед</button>
+                <button style={{ color: palette.primary, borderColor: palette.primary }} className='palette-table__button' onClick={() => { nextPage() }} disabled={!canNextPage}>{'>'}</button>
+                <button style={{ color: palette.primary, borderColor: palette.primary }} className='palette-table__button' onClick={() => { gotoPage(pageCount - 1) }} disabled={!canNextPage}>{'>>'}</button>
+
             </div>
         </>
     )
