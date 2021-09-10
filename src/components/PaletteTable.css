@@ -1,0 +1,10 @@
+.palette-table__header {
+    text-align: left;
+    font-size: 16px;
+}
+
+.palette-table__sort-icon {
+    height: 12px;
+    width: auto;
+    margin-left: 4px;
+}
