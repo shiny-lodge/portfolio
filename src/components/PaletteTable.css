@@ -26,6 +26,7 @@
     -moz-appearance: textfield;
     background-color: transparent;
     border: none;
+    outline: none;
     border-bottom: 1px solid;
     text-align: center;
     font-weight: 700;

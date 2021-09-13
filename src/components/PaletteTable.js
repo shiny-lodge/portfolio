@@ -7,20 +7,15 @@ import { PaletteTableFilter } from './PaletteTableFilter'
 
 export const PaletteTable = (props) => {
 
-    const { primaryColor } = props;
-    const [palette, setPalette] = React.useState({
-        background: props.background,
-        paper: props.paperColor,
-        primary: props.primaryColor,
-        accent: props.accentColor
-    })
+    const [selectedPalette, setSelectedPalette] = React.useState(props.palette)
 
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => MOCK_DATA, [])
 
     const tableInstance = useTable({
         columns,
-        data
+        data,
+        initialState: { pageSize: 50 }
     },
         useGlobalFilter, useSortBy, usePagination)
 
@@ -37,34 +32,36 @@ export const PaletteTable = (props) => {
         gotoPage,
         pageCount,
         prepareRow,
+        setPageSize,
         state,
         setGlobalFilter
     } = tableInstance
 
-    const { globalFilter, pageIndex } = state
+    const { globalFilter, pageIndex, pageSize } = state
 
     return (
         <>
-            <PaletteTableFilter textColor={palette.primary} filter={globalFilter} setFilter={setGlobalFilter} />
+            <PaletteTableFilter textColor={selectedPalette.primary} filter={globalFilter} setFilter={setGlobalFilter} />
 
-            <table className='palette-table' style={{ color: palette.primary }} {...getTableProps()}>
+            <table className='palette-table' style={{ color: selectedPalette.primary }} {...getTableProps()}>
                 <thead>
                     {
-                        headerGroups.map((headerGroup) => (
-                            <tr {...headerGroup.getHeaderGroupProps}>
-                                {headerGroup.headers.map((column) => (
+                        headerGroups.map((headerGroup, index) => (
+                            <tr key={index} {...headerGroup.getHeaderGroupProps}>
+                                {headerGroup.headers.map((column, index) => (
                                     <th
                                         className='palette-table__header'
+                                        key={index}
                                         {...column.getHeaderProps(column.getSortByToggleProps())}>
                                         {column.render('Header')}
                                         <span>
                                             {column.isSorted ? (column.isSortedDesc ?
                                                 <svg className='palette-table__sort-icon' viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M17 14H20L16 18L12 14H15V0H17V14ZM0 14H10V16H0V14ZM4 2V4H0V2H4ZM0 8H7V10H0V8Z" fill={props.accentColor} />
+                                                    <path d="M17 14H20L16 18L12 14H15V0H17V14ZM0 14H10V16H0V14ZM4 2V4H0V2H4ZM0 8H7V10H0V8Z" fill={selectedPalette.accent} />
                                                 </svg>
                                                 :
                                                 <svg className='palette-table__sort-icon' viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M17 4H20L16 0L12 4H15V18H17V4ZM0 14H10V16H0V14ZM4 2V4H0V2H4ZM0 8H7V10H0V8Z" fill={props.accentColor} />
+                                                    <path d="M17 4H20L16 0L12 4H15V18H17V4ZM0 14H10V16H0V14ZM4 2V4H0V2H4ZM0 8H7V10H0V8Z" fill={selectedPalette.accent} />
                                                 </svg>
                                             ) : ''}
                                         </span>
@@ -76,16 +73,16 @@ export const PaletteTable = (props) => {
                 </thead>
                 <tbody {...getTableBodyProps()}>
                     {
-                        page.map(row => {
+                        page.map((row, index) => {
                             prepareRow(row)
                             return (
-                                <tr style={{ cursor: 'pointer' }}
+                                <tr key={index} style={{ cursor: 'pointer' }}
                                     onClick={() => {
                                         props.updatePalette(row.original);
-                                        setPalette(row.original)
+                                        setSelectedPalette(row.original)
                                     }} {...row.getRowProps()}>
-                                    {row.cells.map((cell) => {
-                                        return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                    {row.cells.map((cell, index) => {
+                                        return <td key={index} {...cell.getCellProps()}>{cell.render('Cell')}</td>
                                     })}
                                 </tr>
                             )
@@ -94,17 +91,17 @@ export const PaletteTable = (props) => {
                 </tbody>
             </table>
 
-            <div style={{ color: palette.primary }} className='palette-table__footer'>
-                <button style={{ color: palette.primary, borderColor: palette.primary }} className='palette-table__button' onClick={() => { gotoPage(0) }} disabled={!canPreviousPage}>{'<<'}</button>
-                <button style={{ color: palette.primary, borderColor: palette.primary }} className='palette-table__button' onClick={() => { previousPage() }} disabled={!canPreviousPage}>{'<'}</button>
+            <div style={{ color: selectedPalette.primary }} className='palette-table__footer'>
+                <button style={{ color: selectedPalette.primary, borderColor: selectedPalette.primary }} className='palette-table__button' onClick={() => { gotoPage(0) }} disabled={!canPreviousPage}>{'<<'}</button>
+                <button style={{ color: selectedPalette.primary, borderColor: selectedPalette.primary }} className='palette-table__button' onClick={() => { previousPage() }} disabled={!canPreviousPage}>{'<'}</button>
                 <span>Страница <strong>{pageIndex + 1}</strong> из <strong>{pageOptions.length}</strong></span>
                 <span>| Перейти на страницу: {' '}</span>
-                <input className='palette-table__input' style={{ width: '40px', color: palette.primary, borderColor: palette.primary }} type='number' defaultValue={pageIndex + 1} onChange={e => {
+                <input className='palette-table__input' style={{ width: '40px', color: selectedPalette.primary, borderColor: selectedPalette.primary }} type='number' defaultValue={pageIndex + 1} onChange={e => {
                     const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
                     gotoPage(pageNumber);
                 }}></input>
-                <button style={{ color: palette.primary, borderColor: palette.primary }} className='palette-table__button' onClick={() => { nextPage() }} disabled={!canNextPage}>{'>'}</button>
-                <button style={{ color: palette.primary, borderColor: palette.primary }} className='palette-table__button' onClick={() => { gotoPage(pageCount - 1) }} disabled={!canNextPage}>{'>>'}</button>
+                <button style={{ color: selectedPalette.primary, borderColor: selectedPalette.primary }} className='palette-table__button' onClick={() => { nextPage() }} disabled={!canNextPage}>{'>'}</button>
+                <button style={{ color: selectedPalette.primary, borderColor: selectedPalette.primary }} className='palette-table__button' onClick={() => { gotoPage(pageCount - 1) }} disabled={!canNextPage}>{'>>'}</button>
 
             </div>
         </>

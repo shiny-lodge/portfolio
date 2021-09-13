@@ -1,0 +1,57 @@
+.picker {
+    display: flex;
+    flex-direction: row;
+}
+
+.picker__button {
+    background-color: transparent;
+    border-width: 1px;
+    border-style: solid;
+    border-left-width: 0;
+    cursor: pointer;
+    padding: 4px 12px;
+    transition: background-color 0.4s, color 0.4s;
+}
+
+.picker__button:first-of-type {
+    border-left: 1px solid;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+
+.picker__button:last-of-type {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.picker__button:hover {
+    opacity: 0.5;
+}
+
+@media screen and (max-width: 630px) {
+    .picker {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .picker__button {
+        width: 200px;
+        border-left-width: 1px;
+        border-top: none;
+    }
+
+    .picker__button:first-of-type {
+        border-top: 1px solid;
+        border-top-left-radius: 25px;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 25px;
+    }
+    
+    .picker__button:last-of-type {
+        border-bottom-left-radius: 25px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 25px;
+    }
+
+}

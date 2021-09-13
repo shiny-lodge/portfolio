@@ -1,59 +1,38 @@
 import { useState } from 'react'
 import { PaletteTable } from './PaletteTable';
-export default function Demos(props) {
+import PickerPicker from './PickerPicker';
+import StyleContext from './StyleContext';
 
-    const { background, paperColor, primaryColor, accentColor, tabs, updatePalette } = props;
-    const [activeDemo, setActiveDemo] = useState('');
+import './Demos.css'
 
-    const DemoDreamlact = () => {
-        return (
-            <iframe id='dreamlact-frame' className='demos__frame' src="https://dreamlact.devsides.ru"></iframe>
-        )
-    }
+export default function AltDemos(props) {
 
-    const DemoTable = () => {
-        return (
-            <PaletteTable {...{ background, paperColor, primaryColor, accentColor, updatePalette }} />
-        )
-    }
+    const { updatePalette } = props;
+    const [activeDemo, setActiveDemo] = useState("palette-table");
 
-    const demos = [
-        {
-          component: DemoDreamlact,
-          name: 'Дримлакт'
-        },
-        {
-          component: DemoTable,
-          name: 'Таблица'
-        }
-      ]
-
-    function makeTabs(tabArray, styles) {
-        return (
-            <>
-                {tabArray.map((tabData, index) => (
-                    <button
-                        key={'button_' + index}
-                        className={styles.button}
-                        style={{ color: primaryColor }}
-                        onClick={() => { setActiveDemo(demos[index].component); }}>
-                        {tabData.name}
-                        <div
-                            style={{ backgroundColor: accentColor }}
-                            className={styles.indicator} />
-                    </button>
-                ))}
-            </>
-        )
+    function handleClick(e) {
+        setActiveDemo(e.target.value);
     }
 
     return (
-        <div className="Demos" style={{ backgroundColor: paperColor }}>
-            <h2 style={{ color: primaryColor }} className='demos__title'>Демо</h2>
-            <div>
-                {makeTabs(demos, tabs)}
-            </div>
-            {activeDemo}
-        </div>
+        <StyleContext.Consumer>
+            {(styles) => (
+                <div className="Demos" style={{ backgroundColor: styles.palette.paper }}>
+                        <select className='demos__select' onChange={(e) => { handleClick(e) }}>
+                            <option className='demos__select-option' value='palette-table'>Таблица цветовых схем</option>
+                            <option className='demos__select-option' value='color-picker'>Настройка цветовой схемы</option>
+                        </select>
+                    {
+                        activeDemo === "palette-table" ?
+                            <PaletteTable updatePalette={updatePalette} palette={styles.palette} />
+                            :
+                            activeDemo === "color-picker" ?
+                                <PickerPicker updatePalette={updatePalette} />
+                                :
+                                ""
+                    }
+                </div>
+            )}
+        </StyleContext.Consumer>
     )
 }
