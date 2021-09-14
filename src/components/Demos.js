@@ -5,6 +5,12 @@ import StyleContext from './StyleContext';
 import Select from './Select';
 
 import './Demos.css'
+import Quotewizard from './Quotewizard';
+import RussianTravel from './RussianTravel';
+import Vinyls from './Vinyls';
+import NewsExplorer from './NewsExplorer';
+import Portfolio from './Portfolio';
+import Dreamlact from './Dreamlact';
 
 export default function AltDemos(props) {
 
@@ -35,13 +41,17 @@ export default function AltDemos(props) {
         {
             name: 'Новостной поисковик',
             value: 'news-explorer'
+        },
+        {
+            name: 'Портфолио',
+            value: 'portfolio'
+        },
+        {
+            name: 'Дримлакт',
+            value: 'dreamlact'
         }
     ]
-
-    function handleClick(e) {
-        setActiveDemo(e.target.value);
-    }
-
+    
     return (
         <StyleContext.Consumer>
             {(styles) => (
@@ -56,18 +66,23 @@ export default function AltDemos(props) {
                                 return <PaletteTable updatePalette={updatePalette} palette={styles.palette} />;
                             case "color-picker":
                                 return <PickerPicker updatePalette={updatePalette} />;
-                            case "quotes": 
-                                return <iframe className='demos__frame' src='https://shiny-lodge.github.io/quotewizard/' />;
+                            case "quotes":
+                                return <Quotewizard />;
                             case "russia-travel":
-                                return <iframe className='demos__frame' src='https://shiny-lodge.github.io/russian-travel/' />;
+                                return <RussianTravel />;
                             case "vinyls":
-                                return <iframe className='demos__frame' src='https://codepen.io/shiny-lodge/full/eYRvvML' />;
+                                return <Vinyls />;
                             case "news-explorer":
-                                return <iframe className='demos__frame' src='https://lomovitsky.ru' />;
+                                return <NewsExplorer />;
+                            case "portfolio":
+                                return <Portfolio />;
+                            case "dreamlact":
+                                return <Dreamlact />;
                             default: return <></>
                         }
                     })()
                     }
+                    <span className='smalltext'>© 2021 Daniil Lomovitsky</span>
                 </div>
             )}
         </StyleContext.Consumer>

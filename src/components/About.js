@@ -16,7 +16,7 @@ export default function About(props) {
                     <h1 className='about__name' style={{ color: accentColor }}>Даниил Ломовицкий</h1>
                     <p className='about__job' style={{ color: primaryColor }}>Frontend-разработчик</p>
                 </div>
-                <img className='about__image' src={avatar}></img>
+                <img className='about__image' src={avatar} alt='Аватар'></img>
             </div>
 
             <div className='about__section'>
@@ -38,7 +38,7 @@ export default function About(props) {
                             <svg className='about__contacts-icon' viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M20 2C20 0.9 19.1 0 18 0H2C0.9 0 0 0.9 0 2V14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2ZM18 2L10 7L2 2H18ZM18 14H2V4L10 9L18 4V14Z" fill={accentColor} />
                             </svg>
-                            <a className='about__contacts-link' href='mailto:daniil@lomovitskiy.ru' style={{ color: primaryColor }}>daniil@lomovitskiy.ru</a>
+                            <a className='about__contacts-link' href='mailto:daniil@lomovitsky.ru' style={{ color: primaryColor }}>daniil@lomovitsky.ru</a>
                         </div>
                     </div>
                     <div className='about__location-column'>

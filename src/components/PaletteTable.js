@@ -41,8 +41,16 @@ export const PaletteTable = (props) => {
 
     return (
         <>
+            <div style={{ color: selectedPalette.primary }} >
+                <span className='smalltext' >*Большинство цветовых схем сгенерированы случайным образом для демонстрации таблицы</span>
+                <p style={{ color: selectedPalette.primary }} className='smalltext'>Планы по доработке:</p>
+                <ul>
+                    <li className='smalltext'>Реализация в виде карточек</li>
+                    <li className='smalltext'>Улучшение адаптивности</li>
+                    <li className='smalltext'>Бэкенд для хранения пользовательских цветовых схем</li>
+                </ul>
+            </div>
             <PaletteTableFilter textColor={selectedPalette.primary} filter={globalFilter} setFilter={setGlobalFilter} />
-
             <table className='palette-table' style={{ color: selectedPalette.primary }} {...getTableProps()}>
                 <thead>
                     {

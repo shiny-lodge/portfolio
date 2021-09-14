@@ -27,6 +27,16 @@ export default function PickerPicker(props) {
 
                 return (
                     <div>
+                        <div style={{ color: styles.palette.primary }}>
+                            <span className='smalltext'>Реализовано с использованием jquery и jquery ui</span>
+                            <p className='smalltext'>Планы по доработке:</p>
+                            <ul>
+                                <li className='smalltext'>Улучшение дизайна</li>
+                                <li className='smalltext'>Более подробная информация о выбранном цвете (rgb, cmyk, hsl)</li>
+                                <li className='smalltext'>Бэкенд для сохранения пользовательских цветовых схем</li>
+                                <li className='smalltext'>Добавление альфа-канала</li>
+                            </ul>
+                        </div>
                         <div className='picker'>
                             <button className='picker__button' onClick={() => { setActiveSelection('background') }} style={activeSelection === 'background' ? buttonStyle.active : buttonStyle.inactive} >
                                 Фон

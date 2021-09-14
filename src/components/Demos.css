@@ -41,3 +41,10 @@
     border: none;
     appearance: none;
 }
+
+@media screen and (max-width: 820px) {
+    .Demos {
+
+        padding: 24px 24px;
+    }
+}
