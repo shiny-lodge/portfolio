@@ -11,6 +11,7 @@ import Vinyls from './Vinyls';
 import NewsExplorer from './NewsExplorer';
 import Portfolio from './Portfolio';
 import Dreamlact from './Dreamlact';
+import ThreeDee from './Threedee';
 
 export default function AltDemos(props) {
 
@@ -49,9 +50,13 @@ export default function AltDemos(props) {
         {
             name: 'Дримлакт',
             value: 'dreamlact'
+        },
+        {
+            name: '3D модель',
+            value: 'threedee'
         }
     ]
-    
+
     return (
         <StyleContext.Consumer>
             {(styles) => (
@@ -78,6 +83,8 @@ export default function AltDemos(props) {
                                 return <Portfolio />;
                             case "dreamlact":
                                 return <Dreamlact />;
+                            case "threedee":
+                                return <ThreeDee />;
                             default: return <></>
                         }
                     })()
